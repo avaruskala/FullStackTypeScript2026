@@ -11,7 +11,7 @@ export function OptimisticMessage() {
     messagesRetrievedFromApi,
     setMessagesRetrievedFromApi,
   ] = useState<Message[]>([]);
-  const [optimisticMessages, setOptimisticMessages] = useOptimistic<Message[], string>(messagesRetrievedFromApi, (currentMessages, message) => {
+  const [optimisticMessages, addOptimisticMessage] = useOptimistic<Message[], string>(messagesRetrievedFromApi, (currentMessages, message) => {
     return [
       ...currentMessages, { id: currentMessages.length + 1, message }
     ];
@@ -39,7 +39,7 @@ export function OptimisticMessage() {
     e.preventDefault();
 
     startTransition(async () => {
-      addNonOptimisticMessage(message);
+      addOptimisticMessage(message);
       await addNonOptimisticMessage(message);
     });
   }
